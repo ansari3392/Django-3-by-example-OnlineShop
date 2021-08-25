@@ -1,5 +1,5 @@
 from decimal import Decimal 
-from Django.conf import settings
+from django.conf import settings
 from shop.models import Product
 
 
