@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS.append('shop.apps.ShopConfig')
+INSTALLED_APPS.append('cart.apps.CartConfig')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,6 +77,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myshop.wsgi.application'
+CART_SESSION_ID = 'cart'
 
 
 # Database
