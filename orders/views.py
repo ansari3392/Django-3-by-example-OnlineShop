@@ -22,7 +22,7 @@ class OrderCreateView(CreateView):
             cart.clear()
             return render(request, 'orders/order/created.html', {'order':order})
 
-    def get(elf, request):
+    def get(self, request):
         cart = Cart(self.request)
         form = OrderCreateForm()
-        return render(request, 'orders/order/created.html', {'cart':cart, 'form':form})
+        return render(request, 'orders/order/create.html', {'cart':cart, 'form':form})
