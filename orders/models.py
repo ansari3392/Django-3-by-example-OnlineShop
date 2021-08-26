@@ -1,3 +1,3 @@
-from django.db import models
+from .submodels.order import Order
+from .submodels.orderitem import OrderItem
 
-# Create your models here.
