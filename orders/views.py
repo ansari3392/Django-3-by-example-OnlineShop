@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
+from cart.cart import Cart
 from .models import OrderItem
 from .forms import OrderCreateForm
-from cart.cart import Cart
-
+from .tasks import order_created
 
 class OrderCreateView(CreateView):
     def get_context_data(self, **kwargs):
@@ -20,6 +20,8 @@ class OrderCreateView(CreateView):
                 OrderItem.objects.create(order=order, product=item['product'],
                                         price=item['price'], quantity=item['quantity'])
             cart.clear()
+            #launch asynch task
+            order_created.delay(order.id)
             return render(request, 'orders/order/created.html', {'order':order})
 
     def get(self, request):
