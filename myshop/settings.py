@@ -14,6 +14,7 @@ from pathlib import Path
 import os 
 from typing import cast
 from decouple import config
+from celery import Celery
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS.append('shop.apps.ShopConfig')
 INSTALLED_APPS.append('cart.apps.CartConfig')
+INSTALLED_APPS.append('orders.apps.OrdersConfig')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -78,6 +81,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myshop.wsgi.application'
 CART_SESSION_ID = 'cart'
+
+#celery settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myshop.settings')
+app = Celery('myshop')
+app.config_from_object('django.conf:settings')
+app.autodiscover_tasks(INSTALLED_APPS)
+
+
+
 
 
 # Database
