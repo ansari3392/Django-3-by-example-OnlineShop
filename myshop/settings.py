@@ -14,7 +14,7 @@ from pathlib import Path
 import os 
 from typing import cast
 from decouple import config
-from celery import Celery
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -81,15 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myshop.wsgi.application'
 CART_SESSION_ID = 'cart'
-
-#celery settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myshop.settings')
-app = Celery('myshop')
-app.config_from_object('django.conf:settings')
-app.autodiscover_tasks(INSTALLED_APPS)
-
-
-
 
 
 # Database
