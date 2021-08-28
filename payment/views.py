@@ -41,3 +41,10 @@ class PaymentProcessView(View):
         return render(request, 'payment/process.html', {'order':order, 'client_token':client_token})
 
 
+
+class PaymentDoneView(TemplateView):
+    template_name = 'payment/done.html'
+
+
+class PaymentCanceledView(TemplateView):
+    template_name = 'payment/canceled.html'
