@@ -9,6 +9,7 @@ class Order(TimeStampModel):
     postal_code = models.CharField(max_length = 20)
     city = models.CharField(max_length=100)
     paid = models.BooleanField(default=False)
+    braintree_id = models.CharField(max_length=150, blank=True)
 
     class Meta:
         ordering = ('created',)
