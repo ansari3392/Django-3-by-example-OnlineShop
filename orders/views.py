@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 from cart.cart import Cart
 from .models import OrderItem
@@ -22,7 +23,9 @@ class OrderCreateView(CreateView):
             cart.clear()
             #launch asynch task
             order_created.delay(order.id)
-            return render(request, 'orders/order/created.html', {'order':order})
+            #set order in session
+            self.request.session['order_id'] = order.id
+            return redirect(reverse('payment:process'))
 
     def get(self, request):
         cart = Cart(self.request)
