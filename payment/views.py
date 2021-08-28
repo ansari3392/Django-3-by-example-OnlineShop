@@ -11,12 +11,12 @@ class PaymentProcessView(View):
     def post(self, request):
         order_id = self.request.session.get('order_id')
         order = get_object_or_404(Order, id=order_id)
-        get_total_cost = order.get_total_cost()
+        total_cost = order.get_total_cost()
         #retrieve nonce
         nonce = self.request.POST.get('payment_method_nonce', None)
         #create and submit transaction
         result = gateway.transaction.sale({
-            'amount': f'{total_cost:2f}',
+            'amount': f'{total_cost:.2f}',
             'payment_method_nonce': nonce, 
             'options': {
                 'submit_for_settlement': True
@@ -35,7 +35,7 @@ class PaymentProcessView(View):
     def get(self, request):
         order_id = self.request.session.get('order_id')
         order = get_object_or_404(Order, id=order_id)
-        get_total_cost = order.get_total_cost()
+        total_cost = order.get_total_cost()
         #generate token
         client_token = gateway.client_token.generate()
         return render(request, 'payment/process.html', {'order':order, 'client_token':client_token})
