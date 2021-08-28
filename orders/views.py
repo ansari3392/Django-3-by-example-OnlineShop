@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from cart.cart import Cart
 from .models import OrderItem, Order
 from .forms import OrderCreateForm
@@ -33,7 +34,7 @@ class OrderCreateView(CreateView):
         form = OrderCreateForm()
         return render(request, 'orders/order/create.html', {'cart':cart, 'form':form})
 
-
+@method_decorator(staff_member_required, name='dispatch')
 class AdminOrderDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(AdminOrderDetail, self).get_context_data(**kwargs)
