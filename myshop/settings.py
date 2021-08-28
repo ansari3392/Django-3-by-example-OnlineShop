@@ -49,6 +49,8 @@ INSTALLED_APPS = [
 INSTALLED_APPS.append('shop.apps.ShopConfig')
 INSTALLED_APPS.append('cart.apps.CartConfig')
 INSTALLED_APPS.append('orders.apps.OrdersConfig')
+INSTALLED_APPS.append('payment.apps.PaymentConfig')
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
