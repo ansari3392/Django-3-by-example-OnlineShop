@@ -50,6 +50,7 @@ INSTALLED_APPS.append('shop.apps.ShopConfig')
 INSTALLED_APPS.append('cart.apps.CartConfig')
 INSTALLED_APPS.append('orders.apps.OrdersConfig')
 INSTALLED_APPS.append('payment.apps.PaymentConfig')
+INSTALLED_APPS.append('coupons.apps.CouponsConfig')
 
 
 MIDDLEWARE = [
