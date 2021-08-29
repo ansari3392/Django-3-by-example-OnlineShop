@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView, View
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from cart.cart import Cart
@@ -34,11 +34,13 @@ class OrderCreateView(CreateView):
         form = OrderCreateForm()
         return render(request, 'orders/order/create.html', {'cart':cart, 'form':form})
 
-@method_decorator(staff_member_required, name='dispatch')
-class AdminOrderDetailView(DetailView):
-    def get_context_data(self, **kwargs):
-        context = super(AdminOrderDetail, self).get_context_data(**kwargs)
-        context['order'] = get_object_or_404(Order, id=order_id)
-        return context
 
-    template_name = 'admin/orders/order/detail.html'
+
+@method_decorator(staff_member_required, name='dispatch')
+class AdminOrderDetailView(View):
+    
+    def get(self, *args, **kwargs):
+        order_id = self.kwargs.get('order_id')
+        order = get_object_or_404(Order, id=order_id)
+        return render(self.request, 'admin/orders/order/detail.html', {'order': order})
+    
