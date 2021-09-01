@@ -51,6 +51,7 @@ INSTALLED_APPS.append('cart.apps.CartConfig')
 INSTALLED_APPS.append('orders.apps.OrdersConfig')
 INSTALLED_APPS.append('payment.apps.PaymentConfig')
 INSTALLED_APPS.append('coupons.apps.CouponsConfig')
+INSTALLED_APPS.append('account.apps.AccountConfig')
 
 
 MIDDLEWARE = [
@@ -119,6 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+from django.utils.translation import gettext_lazy as _
 
 LANGUAGE_CODE = 'en-us'
 
@@ -131,13 +133,15 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = (
-    ('en', 'English'),
-    ('es', 'Spanish'),
-    ('fa', 'Persian'),
-    ('ar', 'Arabic'),
-    
+    ('en', _('English')),
+    ('es', _('Spanish')),
+    ('fa', _('Persian')),
+    ('ar', _('Arabic')),
 )
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
