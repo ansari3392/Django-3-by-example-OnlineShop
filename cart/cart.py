@@ -82,10 +82,93 @@ class Cart(object):
     
     def get_discount(self):
         if self.coupon:
-           return (self.coupon.discount / Decimal(100)* self.get_total_price)
+           return (self.coupon.discount / Decimal(100)) * self.get_total_price()
         return Decimal(0)
 
     def get_total_price_after_discount(self):
         return self.get_total_price() - self.get_discount()
+
+
+
+
+
+
+
+
+
+
+#  rest frame work #
+#  from rest_framework.validators import ValidationError
+
+# from product_pack.models import ProductPack
+
+# CART_SESSION_ID = "cart"
+
+
+# class SessionCart:
+#     def _init_(self, request):
+#         """
+#             get the session of user if not exists it will create one
+#         """
+#         self.session = request.session
+#         cart = self.session.get(CART_SESSION_ID)
+#         if not cart:
+#             cart = self.session[CART_SESSION_ID] = {}
+#         self.cart = cart
+
+#     def _iter_(self):
+#         product_skus = self.cart.keys()
+#         products = ProductPack.objects.filter(sku__in=product_skus)
+#         cart = self.cart.copy()
+#         for product in products:
+#             cart[product.sku]['product'] = product
+
+#         for item in cart.values():
+#             yield item
+
+#     def add(self, product_pack, quantity):
+#         """
+#             it will receive 
+#         """
+#         product_pack_sku = str(product_pack.sku)
+#         if product_pack_sku not in self.cart:
+#             self.cart[product_pack_sku] = {'quantity': int(quantity)}
+#         else:
+#             self.cart[product_pack_sku]['quantity'] += int(quantity)
+#         self.save()
+
+#     def add_quantity_by_one(self, product_pack):
+#         product_sku = str(product_pack.sku)
+#         if product_sku not in self.cart:
+#             raise ValidationError(detail={"message": "product not found"})
+#         self.cart[product_sku]['quantity'] += 1
+#         self.save()
+
+#     def subtract(self, product):
+#         product_sku = str(product.sku)
+#         if product_sku not in self.cart:
+#             raise ValidationError(detail={"message": "product not found"})
+#         self.cart[product_sku]['quantity'] -= 1
+#         self.save()
+
+#     def remove(self, product):
+#         product_sku = str(product.sku)
+#         if product_sku not in self.cart:
+#             raise ValidationError(detail={"message": "product not found"})
+#         del self.cart[product_sku]
+#         self.save()
+
+#     def get_cart_items(self):
+#         item_list = []
+#         for sku, quantity in self.cart.items():
+#             item_list.append({sku: quantity})
+#         return item_list
+
+#     def save(self):
+#         self.session.modified = True
+
+#     def clear(self):
+#         self.session[CART_SESSION_ID] = {}
+#         self.save()
 
 
