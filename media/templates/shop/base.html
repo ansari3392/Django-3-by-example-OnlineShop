@@ -5,11 +5,23 @@
     <meta charset="utf-8" />
     <title>{% block title %}My shop{% endblock %}</title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    
   </head>
   <body>
-    <div id="header">
-      <a href="/" class="logo">My shop</a>
+    <div style="display: flex;justify-content: space-between;align-items: center;" id="header">
+      <div style="width: 200px;">
+        <a href="/" class="logo">My shop</a>
+      </div>
+      <div>
+        {% if request.user.is_authenticated %}
+          Hello {{ request.user.username }}, <a href="{% url 'account:logout' %}">Logout</a> 
+        {% else %}
+          <a href="{% url 'account:login' %}">Login</a> 
+          <a href="{% url 'account:register' %}">signup</a> 
+        {% endif %}
+      </div>
     </div>
+    
     <div id="subheader">
       <div class="cart">
         {% with total_items=cart|length %}
@@ -24,6 +36,18 @@
           Your cart is empty.
         {% endif %}
         {% endwith %}  
+
+
+  {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">
+      {{ message|safe }}
+      <a href="#" class="close">x</a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
       </div>
     </div>
     <div id="content">
