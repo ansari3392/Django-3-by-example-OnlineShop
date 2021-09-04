@@ -45,8 +45,8 @@ def order_detail(obj):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'first_name', 'last_name', 'email', 
-                    'address', 'postal_code', 'city', 'paid', 'created', 'updated', order_detail]
+    list_display = ['id', 'email', 
+                       'paid', 'created', 'updated', order_detail]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions =[export_to_csv]
